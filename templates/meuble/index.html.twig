@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits - SymHome{% endblock %}
+
+{% block body %}
+
+<section class="bg-white py-5 border-bottom">
+    <div class="container text-center">
+        <h1 class="fw-bold">Bienvenue chez SymHome</h1>
+        <p class="text-muted fs-5">Découvrez nos meubles modernes pour votre maison.</p>
+    </div>
+</section>
+
+<div class="container my-5">
+
+    <form method="get" action="{{ path('app_meuble') }}" class="row g-3 mb-4">
+        <div class="col-md-5">
+            <input type="text" name="search" value="{{ search }}" class="form-control" placeholder="Rechercher un meuble...">
+        </div>
+
+        <div class="col-md-5">
+            <select name="categorie" class="form-select">
+                <option value="">Toutes les catégories</option>
+
+                {% for categorie in categories %}
+                    <option value="{{ categorie.id }}" {% if categorieId == categorie.id %}selected{% endif %}>
+                        {{ categorie.nom }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-dark w-100">Rechercher</button>
+        </div>
+    </form>
+
+    <div class="row">
+        {% for meuble in meubles %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+
+                    {% if meuble.image %}
+                        <img src="{{ asset('uploads/meubles/' ~ meuble.image) }}" class="card-img-top" style="height: 230px; object-fit: cover;" alt="{{ meuble.nom }}">
+                    {% else %}
+                        <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 230px;">
+                            Aucune image
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ meuble.nom }}</h5>
+
+                        <p class="text-muted mb-1">
+                            Catégorie :
+                            {% if meuble.categorie %}
+                                {{ meuble.categorie.nom }}
+                            {% else %}
+                                Non définie
+                            {% endif %}
+                        </p>
+
+                        <p class="fw-bold text-success fs-5">{{ meuble.prix }} DT</p>
+
+                        <div class="d-flex gap-2">
+                            <a href="{{ path('app_meuble_show', {id: meuble.id}) }}" class="btn btn-outline-dark w-50">
+                                Voir détail
+                            </a>
+
+                            <button class="btn btn-dark w-50" disabled>
+                                Ajouter
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    Aucun meuble trouvé.
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

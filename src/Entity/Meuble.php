@@ -31,7 +31,7 @@ class Meuble
 
     #[ORM\ManyToOne(inversedBy: 'meubles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?categorie $categorie = null;
+    private ?Categorie $categorie = null;
 
     public function getId(): ?int
     {
@@ -46,7 +46,6 @@ class Meuble
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -58,7 +57,6 @@ class Meuble
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -70,7 +68,6 @@ class Meuble
     public function setPrix(string $prix): static
     {
         $this->prix = $prix;
-
         return $this;
     }
 
@@ -82,7 +79,6 @@ class Meuble
     public function setStock(int $stock): static
     {
         $this->stock = $stock;
-
         return $this;
     }
 
@@ -94,19 +90,17 @@ class Meuble
     public function setImage(?string $image): static
     {
         $this->image = $image;
-
         return $this;
     }
 
-    public function getCategorie(): ?categorie
+    public function getCategorie(): ?Categorie
     {
         return $this->categorie;
     }
 
-    public function setCategorie(?categorie $categorie): static
+    public function setCategorie(?Categorie $categorie): static
     {
         $this->categorie = $categorie;
-
         return $this;
     }
 }
