@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - SymHome{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">🛒 Mon Panier</h1>
+
+    {% if items is empty %}
+        <div class="alert alert-info">
+            Votre panier est vide. 
+            <a href="{{ path('app_home') }}">Continuer vos achats</a>
+        </div>
+    {% else %}
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Produit</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Sous-total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.meuble.nom }}</td>
+                    <td>{{ item.meuble.prix }} DT</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.meuble.prix * item.quantity }} DT</td>
+                    <td>
+                        <a href="{{ path('app_cart_add', {id: item.meuble.id}) }}" class="btn btn-sm btn-success">+</a>
+                        <a href="{{ path('app_cart_decrease', {id: item.meuble.id}) }}" class="btn btn-sm btn-warning">-</a>
+                        <a href="{{ path('app_cart_remove', {id: item.meuble.id}) }}" class="btn btn-sm btn-danger">🗑</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-end mt-3">
+            <h4>Total : <strong>{{ total }} DT</strong></h4>
+            <a href="{{ path('app_home') }}" class="btn btn-secondary">Continuer les achats</a>
+            <a href="#" class="btn btn-primary">Passer la commande</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
