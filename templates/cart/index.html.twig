@@ -42,7 +42,7 @@
         <div class="text-end mt-3">
             <h4>Total : <strong>{{ total }} DT</strong></h4>
             <a href="{{ path('app_home') }}" class="btn btn-secondary">Continuer les achats</a>
-            <a href="#" class="btn btn-primary">Passer la commande</a>
+            <a href="{{ path('app_commande_create') }}" class="btn btn-primary">Passer la commande</a>
         </div>
     {% endif %}
 </div>

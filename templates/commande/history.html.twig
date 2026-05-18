@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes - SymHome{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">📦 Mes Commandes</h1>
+
+    {% if commandes is empty %}
+        <div class="alert alert-info">
+            Vous n'avez pas encore de commandes.
+            <a href="{{ path('app_home') }}">Commencer vos achats</a>
+        </div>
+    {% else %}
+        {% for commande in commandes %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+                <span>Commande #{{ commande.id }}</span>
+                <span>{{ commande.dateCommande|date('d/m/Y H:i') }}</span>
+                <span class="badge bg-warning text-dark">{{ commande.statut }}</span>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Sous-total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ligne in commande.ligneCommandes %}
+                        <tr>
+                            <td>{{ ligne.meuble.nom }}</td>
+                            <td>{{ ligne.quantite }}</td>
+                            <td>{{ ligne.prixUnitaire }} DT</td>
+                            <td>{{ ligne.prixUnitaire * ligne.quantite }} DT</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="text-end">
+                    <strong>Total : {{ commande.total }} DT</strong>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
