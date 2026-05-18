@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Admin - SymHome{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">📊 Dashboard Admin</h1>
+
+    {# Stats Cards #}
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body text-center">
+                    <h5 class="card-title">💰 Chiffre d'affaires</h5>
+                    <h2>{{ chiffreAffaires }} DT</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success shadow">
+                <div class="card-body text-center">
+                    <h5 class="card-title">👥 Nombre de clients</h5>
+                    <h2>{{ nbClients }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning shadow">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📦 Commandes</h5>
+                    <h2>{{ nbCommandes }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Orders Table #}
+    <h3 class="mb-3">Toutes les commandes</h3>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Client</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.user.email }}</td>
+                <td>{{ commande.dateCommande|date('d/m/Y') }}</td>
+                <td>{{ commande.total }} DT</td>
+                <td>
+                    <span class="badge bg-warning text-dark">{{ commande.statut }}</span>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Aucune commande</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {# Admin Links #}
+    <div class="mt-4 d-flex gap-3">
+        <a href="{{ path('app_meuble_admin_index') }}" class="btn btn-dark">
+            🪑 Gérer les Meubles
+        </a>
+        <a href="{{ path('app_categorie_admin_index') }}" class="btn btn-secondary">
+            📁 Gérer les Catégories
+        </a>
+    </div>
+</div>
+{% endblock %}
