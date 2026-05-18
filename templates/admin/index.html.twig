@@ -34,6 +34,26 @@
         </div>
     </div>
 
+    {# Charts Row #}
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header fw-bold">📈 Chiffre d'affaires par mois</div>
+                <div class="card-body">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header fw-bold">🪑 Meubles les plus vendus</div>
+                <div class="card-body">
+                    <canvas id="topMeublesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {# Orders Table #}
     <h3 class="mb-3">Toutes les commandes</h3>
     <table class="table table-bordered table-hover">
@@ -67,12 +87,37 @@
 
     {# Admin Links #}
     <div class="mt-4 d-flex gap-3">
-        <a href="{{ path('app_meuble_admin_index') }}" class="btn btn-dark">
-            🪑 Gérer les Meubles
-        </a>
-        <a href="{{ path('app_categorie_admin_index') }}" class="btn btn-secondary">
-            📁 Gérer les Catégories
-        </a>
+        <a href="{{ path('app_meuble_admin_index') }}" class="btn btn-dark">🪑 Gérer les Meubles</a>
+        <a href="{{ path('app_categorie_admin_index') }}" class="btn btn-secondary">📁 Gérer les Catégories</a>
+        <a href="#" class="btn btn-info text-white">👥 Gérer les Utilisateurs</a>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Revenue Chart
+    new Chart(document.getElementById('revenueChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ revenueLabels|json_encode|raw }},
+            datasets: [{
+                label: 'Chiffre d\'affaires (DT)',
+                data: {{ revenueData|json_encode|raw }},
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            }]
+        }
+    });
+
+    // Top Meubles Chart
+    new Chart(document.getElementById('topMeublesChart'), {
+        type: 'doughnut',
+        data: {
+            labels: {{ topMeublesLabels|json_encode|raw }},
+            datasets: [{
+                data: {{ topMeublesData|json_encode|raw }},
+                backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF'],
+            }]
+        }
+    });
+</script>
 {% endblock %}
